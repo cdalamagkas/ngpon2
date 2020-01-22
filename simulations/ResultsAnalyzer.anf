@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scave:Analysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:scave="http://www.omnetpp.org/omnetpp/scave">
+  <inputs>
+    <inputs name="results/*.sca"/>
+  </inputs>
+  <datasets>
+    <datasets name="Results">
+      <items xsi:type="scave:Add" filterPattern=""/>
+      <items xsi:type="scave:ComputeScalar" scalarName="meanGoodput" valueExpr="(mean('bytesReceived:sum') / Network.'duration:last') * 0.000008" moduleExpr="Network" groupByExpr="" averageReplications="true"/>
+      <items xsi:type="scave:Discard" filterPattern="bytesReceived:sum"/>
+      <items xsi:type="scave:Discard" filterPattern="eed:mean"/>
+      <items xsi:type="scave:Discard" filterPattern="dropRate:last"/>
+      <items xsi:type="scave:Discard" filterPattern="duration:last"/>
+      <items xsi:type="scave:ScatterChart" name="meanGoodput" xDataPattern="module(_runattrs_) AND name(ONUs)">
+        <properties name="Graph.Title" value="Mean network goodput as ONUs increases"/>
+        <properties name="X.Axis.Title" value="ONUs"/>
+        <properties name="Y.Axis.Title" value="Goodput (Mbps)"/>
+        <properties name="Legend.Display" value="true"/>
+      </items>
+    </datasets>
+  </datasets>
+  <chartSheets>
+    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.6"/>
+  </chartSheets>
+</scave:Analysis>

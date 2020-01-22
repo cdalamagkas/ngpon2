@@ -1,0 +1,5 @@
+ifeq ($(OS),Windows_NT)
+	LIBS =  -llibboost_system-mt -llibboost_filesystem-mt
+else
+	LIBS =  -lboost_system -lboost_filesystem
+endif

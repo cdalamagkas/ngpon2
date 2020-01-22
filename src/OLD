@@ -1,0 +1,44 @@
+/*std::vector<int> OltSchedulerUS::getOnusShortedByLoad(std::vector<int64_t> allocations, std::vector<int> channelAllocationByOnuId, int c, bool sendsPloamu) //Ascending order
+{
+    struct Onu { int onuId; double load; };
+    struct by_load { bool operator()(Onu const &a, Onu const &b) { return a.load > b.load; } };
+
+    std::vector<Onu> onusVector;
+    std::vector<int> onusShortedByLoad;
+    std::vector<int64_t> bandwidthConsumptionByOnuId = std::vector<int64_t>(oltDatabase->getOnuCount(), 0); //(int64_t *) std::calloc(oltDatabase->ONUS, sizeof(int64_t));
+
+    calculateBandwidthConsumptionOfOnus(allocations, &bandwidthConsumptionByOnuId, sendsPloamu); //Fills bandwidthConsumptionByOnuId.at() accordingly
+
+    for (int i=0; i<oltDatabase->getOnuCount(); i++)
+        if ( channelAllocationByOnuId.at(i) == c )
+        {
+            struct Onu onu;
+            onu.onuId = i;
+            onu.load  = oltDatabase->getPdt(i).dbl() + calculateTransmissionDelay( bandwidthConsumptionByOnuId.at(i) ).dbl();
+            onusVector.push_back(onu);
+        }
+
+    std::sort(onusVector.begin(), onusVector.end(), by_load());
+
+    while (!onusVector.empty()) {
+        onusShortedByLoad.push_back(onusVector.back().onuId);
+        onusVector.pop_back();
+    }
+
+    return onusShortedByLoad;
+}*/
+
+/*
+fesetround(FE_DOWNWARD);
+beAvailableBandwidth = availableBandwidth.at(c);
+for (int i=0; i<oltDatabase->getAllocIDCount(); i++)    // allocate it proportionally
+    if (channelAllocationByOnuId.at(oltDatabase->getOnuIdByAllocId(i)) == c )  //if current AllocID belongs to the current channel
+    {
+        allocation = llrint((oltDatabase->getBufOcc(i) * beAvailableBandwidth) / bestEffortDemands);
+        oltDatabase->setBufOcc(i, oltDatabase->getBufOcc(i) - allocation );
+        availableBandwidth.at(c) -= allocation;
+        bandwidthAllocationByAllocId.at(i) += allocation;
+        allocId = i;
+    }
+fesetround(FE_UPWARD);*/
+
